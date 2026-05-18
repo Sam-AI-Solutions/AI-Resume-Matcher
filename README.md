@@ -1,11 +1,37 @@
 ```mermaid
 flowchart TD
-    n1["User types text"] --> n2["React stores it in state"]
-    n2 --> n3["User clicks button"]
-    n3 --> n4["fetch() sends data to backend"]
-    n4 --> n5["Express receives request"]
-    n5 --> n6["Backend sends prompt to Gemini"]
-    n6 --> n7["Gemini returns JSON"]
-    n7 --> n8["Backend sends JSON to React"]
-    n8 --> n9["React updates UI"]
+
+    A["User enters resume + job description"]
+        --> B["React stores input in state"]
+
+    B --> C["User clicks Analyze Match"]
+
+    C --> D["fetch() sends data to Express backend"]
+
+    D --> E["Express route receives request"]
+
+    E --> F["extractResume.js"]
+    E --> G["extractJob.js"]
+
+    F --> H["Gemini extracts structured resume data"]
+    G --> I["Gemini extracts structured job requirements"]
+
+    H --> J["Structured Resume JSON"]
+    I --> K["Structured Job JSON"]
+
+    J --> L["calculateScore.js"]
+    K --> L
+
+    L --> M["Deterministic ATS score calculation"]
+
+    M --> N["generateFeedback.js"]
+
+    J --> N
+    K --> N
+
+    N --> O["Gemini generates strengths, missing skills, and suggestions"]
+
+    O --> P["Backend returns final JSON response"]
+
+    P --> Q["React updates UI with results"]
 ```
