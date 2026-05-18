@@ -1,4 +1,4 @@
-## Planned AI Pipeline Architecture
+## Implemented AI Pipeline Architecture
 
 ```mermaid
 flowchart LR
