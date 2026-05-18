@@ -29,31 +29,40 @@ flowchart LR
         K["Final Analysis Response"]
     end
 
-    A -->| | B
-    B -->| | C
+    A --> B
+    B --> C
 
-    C -->| | D
-    C -->| | E
+    C --> D
+    C --> E
 
-    D -->| | H
-    E -->| | H
+    D --> H
+    E --> H
 
-    H -->| | I
-    H -->| | J
+    H --> I
+    H --> J
 
-    I -->| | F
-    J -->| | F
+    I --> F
+    J --> F
 
-    F -->| | G
+    F --> G
 
-    G -->| | H
+    G --> H
 
-    H -->| | K
+    H --> K
 
-    K -->| | B
+    K --> B
 
+    %% Link Styling
     linkStyle default stroke-width:3px;
 
-    classDef nodePadding padding:15px;
-    class A,B,C,D,E,F,G,H,I,J,K nodePadding;
+    %% Node Styling
+    classDef frontend fill:#E3F2FD,stroke:#1E88E5,color:#000,stroke-width:2px;
+    classDef backend fill:#E8F5E9,stroke:#43A047,color:#000,stroke-width:2px;
+    classDef ai fill:#FFF3E0,stroke:#FB8C00,color:#000,stroke-width:2px;
+    classDef data fill:#F3E5F5,stroke:#8E24AA,color:#000,stroke-width:2px;
+
+    class A,B frontend;
+    class C,D,E,F,G backend;
+    class H ai;
+    class I,J,K data;
 ```
