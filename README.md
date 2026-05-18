@@ -1,37 +1,59 @@
+## Planned AI Pipeline Architecture
+
 ```mermaid
-flowchart TD
+flowchart LR
 
-    A["User enters resume + job description"]
-        --> B["React stores input in state"]
+    subgraph Frontend
+        A["User Inputs Resume + Job Description"]
+        B["React Frontend"]
+    end
 
-    B --> C["User clicks Analyze Match"]
+    subgraph Backend
+        C["Express API Route"]
 
-    C --> D["fetch() sends data to Express backend"]
+        D["Resume Extraction Service"]
+        E["Job Extraction Service"]
 
-    D --> E["Express route receives request"]
+        F["ATS Scoring Engine"]
 
-    E --> F["extractResume.js"]
-    E --> G["extractJob.js"]
+        G["Feedback Generation Service"]
+    end
 
-    F --> H["Gemini extracts structured resume data"]
-    G --> I["Gemini extracts structured job requirements"]
+    subgraph AI
+        H["Gemini API"]
+    end
 
-    H --> J["Structured Resume JSON"]
-    I --> K["Structured Job JSON"]
+    subgraph Data
+        I["Structured Resume JSON"]
+        J["Structured Job JSON"]
+        K["Final Analysis Response"]
+    end
 
-    J --> L["calculateScore.js"]
-    K --> L
+    A -->| | B
+    B -->| | C
 
-    L --> M["Deterministic ATS score calculation"]
+    C -->| | D
+    C -->| | E
 
-    M --> N["generateFeedback.js"]
+    D -->| | H
+    E -->| | H
 
-    J --> N
-    K --> N
+    H -->| | I
+    H -->| | J
 
-    N --> O["Gemini generates strengths, missing skills, and suggestions"]
+    I -->| | F
+    J -->| | F
 
-    O --> P["Backend returns final JSON response"]
+    F -->| | G
 
-    P --> Q["React updates UI with results"]
+    G -->| | H
+
+    H -->| | K
+
+    K -->| | B
+
+    linkStyle default stroke-width:3px;
+
+    classDef nodePadding padding:15px;
+    class A,B,C,D,E,F,G,H,I,J,K nodePadding;
 ```
