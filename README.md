@@ -20,7 +20,8 @@ flowchart LR
     end
 
     subgraph AI
-        H["Gemini API"]
+        H["Gemini API (Extraction)"]
+        L["Gemini API (Feedback)"]
     end
 
     subgraph Data
@@ -46,9 +47,9 @@ flowchart LR
 
     F --> G
 
-    G --> H
+    G --> L
 
-    H --> K
+    L --> K
 
     K --> B
 
@@ -63,6 +64,6 @@ flowchart LR
 
     class A,B frontend;
     class C,D,E,F,G backend;
-    class H ai;
+    class H,L ai;
     class I,J,K data;
 ```
