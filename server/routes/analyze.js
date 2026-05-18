@@ -8,11 +8,28 @@ router.post("/", async (req, res) => {
     const { resume, jobDescription } = req.body;
 
     const prompt = `
-You are an ATS resume analyzer.
+You are a strict ATS resume analyzer.
 
-Compare the resume and the job description.
+Analyze the resume against the job description.
 
-Return ONLY valid JSON.
+Scoring Rules:
+- Very short resumes should receive low scores.
+- Lack of detail should reduce the score.
+- Missing technical skills should reduce the score.
+- Generic resumes should not score highly.
+- Strong resumes include:
+  - detailed experience
+  - relevant technologies
+  - projects
+  - measurable achievements
+  - years of experience
+
+Return ONLY raw valid JSON.
+
+Do not include markdown.
+Do not explain anything.
+
+Use this exact format:
 
 {
   "matchScore": number,
