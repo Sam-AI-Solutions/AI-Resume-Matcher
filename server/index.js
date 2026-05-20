@@ -31,4 +31,25 @@ app.listen(env.PORT, () => {
   console.log(
     `Server running on port ${env.PORT}`
   );
+
+  app.get("/ollama-test", async (req, res) => {
+
+  try {
+
+    const response = await fetch(
+      process.env.OLLAMA_URL
+    );
+
+    res.json({
+      success: true,
+    });
+
+  } catch (error) {
+
+    res.status(500).json({
+      success: false,
+      error: error.message,
+    });
+  }
+});
 });
