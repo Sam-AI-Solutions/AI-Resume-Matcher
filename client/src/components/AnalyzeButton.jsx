@@ -2,15 +2,16 @@ function AnalyzeButton({
   analyzeMatch,
   loading,
 }) {
+
   return (
     <button
-      className="analyze-btn"
       onClick={analyzeMatch}
       disabled={loading}
+      className="analyze-btn"
     >
       {loading
         ? "Analyzing..."
-        : "Analyze Match"}
+        : "Analyze Resume"}
     </button>
   );
 }

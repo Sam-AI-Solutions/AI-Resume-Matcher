@@ -1,23 +1,30 @@
 function ResultsCard({ result }) {
-  return (
-    <section className="results-card">
 
-      <div className="score">
-        <h2>
+  return (
+    <section>
+
+      <div className="results-header">
+
+        <h2 className="results-title">
           Match Score
         </h2>
 
-        <span>
+        <span className="results-score">
           {result.matchScore}%
         </span>
+
       </div>
 
       <div className="results-grid">
 
-        <div className="card">
-          <h3>Strengths</h3>
+        <div className="result-card">
 
-          <ul>
+          <h3 className="result-card-title">
+            Strengths
+          </h3>
+
+          <ul className="result-list">
+
             {result.strengths.map(
               (item, index) => (
                 <li key={index}>
@@ -25,13 +32,19 @@ function ResultsCard({ result }) {
                 </li>
               )
             )}
+
           </ul>
+
         </div>
 
-        <div className="card">
-          <h3>Missing Skills</h3>
+        <div className="result-card">
 
-          <ul>
+          <h3 className="result-card-title">
+            Missing Skills
+          </h3>
+
+          <ul className="result-list">
+
             {result.missingSkills.map(
               (item, index) => (
                 <li key={index}>
@@ -39,13 +52,19 @@ function ResultsCard({ result }) {
                 </li>
               )
             )}
+
           </ul>
+
         </div>
 
-        <div className="card">
-          <h3>Suggestions</h3>
+        <div className="result-card">
 
-          <ul>
+          <h3 className="result-card-title">
+            Suggestions
+          </h3>
+
+          <ul className="result-list">
+
             {result.suggestions.map(
               (item, index) => (
                 <li key={index}>
@@ -53,10 +72,13 @@ function ResultsCard({ result }) {
                 </li>
               )
             )}
+
           </ul>
+
         </div>
 
       </div>
+
     </section>
   );
 }
