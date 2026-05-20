@@ -1,12 +1,13 @@
 import { model } from "./gemini.js";
 
-export const generateFeedback = async (
-  resumeData,
-  jobData,
-  score
-) => {
+export const generateFeedback =
+  async (
+    resumeData,
+    jobData,
+    score
+  ) => {
 
-  const prompt = `
+    const prompt = `
 You are an ATS resume coach.
 
 Resume Data:
@@ -18,7 +19,7 @@ ${JSON.stringify(jobData)}
 Match Score:
 ${score}
 
-Return ONLY valid JSON:
+Return ONLY valid JSON.
 
 {
   "strengths": [],
@@ -27,10 +28,21 @@ Return ONLY valid JSON:
 }
 `;
 
-  const result =
-    await model.generateContent(prompt);
+    const result =
+      await model.generateContent(
+        prompt
+      );
 
-  const response = result.response.text();
+    const response =
+      await result.response;
 
-  return JSON.parse(response);
-};
+    const text =
+      response.text();
+
+    const cleanedText = text
+  .replace(/```json/g, "")
+  .replace(/```/g, "")
+  .trim();
+
+return JSON.parse(cleanedText);;
+  };

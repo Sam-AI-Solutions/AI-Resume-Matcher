@@ -1,57 +1,63 @@
 function ResultsCard({ result }) {
   return (
-    <div className="mt-8 border-t pt-8">
+    <section className="results-card">
 
-      <h2 className="text-3xl font-bold mb-4">
-        Match Score: {result.matchScore}%
-      </h2>
+      <div className="score">
+        <h2>
+          Match Score
+        </h2>
 
-      <div className="space-y-6">
+        <span>
+          {result.matchScore}%
+        </span>
+      </div>
 
-        <div>
-          <h3 className="text-xl font-semibold mb-2">
-            Missing Skills
-          </h3>
+      <div className="results-grid">
 
-          <ul className="list-disc pl-6">
-            {result.missingSkills.map(
-              (skill, index) => (
-                <li key={index}>{skill}</li>
-              )
-            )}
-          </ul>
-        </div>
+        <div className="card">
+          <h3>Strengths</h3>
 
-        <div>
-          <h3 className="text-xl font-semibold mb-2">
-            Strengths
-          </h3>
-
-          <ul className="list-disc pl-6">
+          <ul>
             {result.strengths.map(
-              (strength, index) => (
-                <li key={index}>{strength}</li>
+              (item, index) => (
+                <li key={index}>
+                  {item}
+                </li>
               )
             )}
           </ul>
         </div>
 
-        <div>
-          <h3 className="text-xl font-semibold mb-2">
-            Suggestions
-          </h3>
+        <div className="card">
+          <h3>Missing Skills</h3>
 
-          <ul className="list-disc pl-6">
+          <ul>
+            {result.missingSkills.map(
+              (item, index) => (
+                <li key={index}>
+                  {item}
+                </li>
+              )
+            )}
+          </ul>
+        </div>
+
+        <div className="card">
+          <h3>Suggestions</h3>
+
+          <ul>
             {result.suggestions.map(
-              (suggestion, index) => (
-                <li key={index}>{suggestion}</li>
+              (item, index) => (
+                <li key={index}>
+                  {item}
+                </li>
               )
             )}
           </ul>
         </div>
 
       </div>
-    </div>
+    </section>
   );
 }
 

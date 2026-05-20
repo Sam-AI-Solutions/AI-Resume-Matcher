@@ -4,8 +4,9 @@ function AnalyzeButton({
 }) {
   return (
     <button
+      className="analyze-btn"
       onClick={analyzeMatch}
-      className="w-full bg-black text-white py-4 rounded-xl font-semibold hover:opacity-90 transition"
+      disabled={loading}
     >
       {loading
         ? "Analyzing..."

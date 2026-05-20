@@ -5,57 +5,88 @@ import JobDescriptionInput from "./components/JobDescriptionInput";
 import AnalyzeButton from "./components/AnalyzeButton";
 import ResultsCard from "./components/ResultsCard";
 
+import { analyzeResume } from "./services/api";
+
+import "./styles/App.css";
+
 function App() {
   const [resume, setResume] = useState("");
-  const [jobDescription, setJobDescription] = useState("");
+  const [jobDescription, setJobDescription] =
+    useState("");
+
   const [result, setResult] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const analyzeMatch = async () => {
+
+  const [loading, setLoading] =
+    useState(false);
+
+  const [error, setError] = useState("");
+
+  const handleAnalyze = async () => {
     try {
       setLoading(true);
+      setError("");
+      setResult(null);
 
-      const response = await fetch("http://localhost:5000/analyze", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          resume,
-          jobDescription,
-        }),
+      const data = await analyzeResume({
+        resume,
+        jobDescription,
       });
 
-      const data = await response.json();
-
       setResult(data);
-    } catch (error) {
-      console.error(error);
+
+    } catch (err) {
+      setError(
+        err.message ||
+          "Something went wrong"
+      );
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-8">
-        <h1 className="text-4xl font-bold mb-6 text-center">
-          AI Resume Matcher
-        </h1>
+    <main className="app">
+      <section className="container">
 
-        <div className="space-y-6">
-          <ResumeInput resume={resume} setResume={setResume} />
+        <div className="hero">
+          <h1>AI Resume Matcher</h1>
+
+          <p>
+            Compare your resume against
+            any job description using AI.
+          </p>
+        </div>
+
+        <div className="inputs">
+          <ResumeInput
+            resume={resume}
+            setResume={setResume}
+          />
 
           <JobDescriptionInput
             jobDescription={jobDescription}
-            setJobDescription={setJobDescription}
+            setJobDescription={
+              setJobDescription
+            }
           />
 
-          <AnalyzeButton analyzeMatch={analyzeMatch} loading={loading} />
-
-          {result && <ResultsCard result={result} />}
+          <AnalyzeButton
+            analyzeMatch={handleAnalyze}
+            loading={loading}
+          />
         </div>
-      </div>
-    </div>
+
+        {error && (
+          <div className="error">
+            {error}
+          </div>
+        )}
+
+        {result && (
+          <ResultsCard result={result} />
+        )}
+      </section>
+    </main>
   );
 }
 

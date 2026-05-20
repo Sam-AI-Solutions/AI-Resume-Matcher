@@ -1,20 +1,17 @@
 import { model } from "./gemini.js";
 
-export const extractResume = async (
-  resumeText
-) => {
+export const extractResume =
+  async (resumeText) => {
 
-  const prompt = `
-Extract structured information from this resume.
+    const prompt = `
+Extract structured resume information.
 
 Return ONLY valid JSON.
 
-Format:
-
 {
   "skills": [],
-  "yearsExperience": number,
   "projects": [],
+  "yearsExperience": number,
   "technologies": [],
   "summary": ""
 }
@@ -23,10 +20,21 @@ Resume:
 ${resumeText}
 `;
 
-  const result =
-    await model.generateContent(prompt);
+    const result =
+      await model.generateContent(
+        prompt
+      );
 
-  const response = result.response.text();
+    const response =
+      await result.response;
 
-  return JSON.parse(response);
-};
+    const text =
+      response.text();
+
+    const cleanedText = text
+      .replace(/```json/g, "")
+      .replace(/```/g, "")
+      .trim();
+
+    return JSON.parse(cleanedText);
+  };

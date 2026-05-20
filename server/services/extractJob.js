@@ -1,15 +1,12 @@
 import { model } from "./gemini.js";
 
-export const extractJob = async (
-  jobDescription
-) => {
+export const extractJob =
+  async (jobDescription) => {
 
-  const prompt = `
-Extract the key requirements from this job description.
+    const prompt = `
+Extract structured job data.
 
 Return ONLY valid JSON.
-
-Format:
 
 {
   "requiredSkills": [],
@@ -22,10 +19,21 @@ Job Description:
 ${jobDescription}
 `;
 
-  const result =
-    await model.generateContent(prompt);
+    const result =
+      await model.generateContent(
+        prompt
+      );
 
-  const response = result.response.text();
+    const response =
+      await result.response;
 
-  return JSON.parse(response);
-};
+    const text =
+      response.text();
+
+    const cleanedText = text
+  .replace(/```json/g, "")
+  .replace(/```/g, "")
+  .trim();
+
+return JSON.parse(cleanedText);;
+  };
