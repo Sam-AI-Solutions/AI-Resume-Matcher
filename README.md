@@ -1,69 +1,87 @@
 ## Implemented AI Pipeline Architecture
 
 ```mermaid
-flowchart LR
+flowchart TB
 
-    subgraph Frontend
-        A["User Inputs Resume + Job Description"]
-        B["React Frontend"]
+    %% FRONTEND
+
+    subgraph FRONTEND["Frontend"]
+        A["User Inputs"]
+        B["React UI"]
+        C["Provider Selection<br/>Gemini / Ollama"]
     end
 
-    subgraph Backend
-        C["Express API Route"]
+    %% BACKEND
 
-        D["Resume Extraction Service"]
-        E["Job Extraction Service"]
+    subgraph BACKEND["Backend"]
+        D["Express API"]
 
-        F["ATS Scoring Engine"]
+        E["Extraction Layer"]
 
-        G["Feedback Generation Service"]
+        F["LLM Provider Router"]
+
+        G["ATS Scoring Engine"]
+
+        H["Feedback Generator"]
     end
 
-    subgraph AI
-        H["Gemini API (Extraction)"]
-        L["Gemini API (Feedback)"]
+    %% AI PROVIDERS
+
+    subgraph AI["AI Providers"]
+        I["Gemini API"]
+        J["Ollama Local LLM"]
     end
 
-    subgraph Data
-        I["Structured Resume JSON"]
-        J["Structured Job JSON"]
-        K["Final Analysis Response"]
+    %% DATA
+
+    subgraph DATA["Structured Output"]
+        K["Resume JSON"]
+        L["Job JSON"]
+        M["Final Analysis"]
     end
+
+    %% FLOW
 
     A --> B
     B --> C
-
     C --> D
-    C --> E
 
-    D --> H
-    E --> H
+    D --> E
+    E --> F
 
-    H --> I
-    H --> J
+    F --> I
+    F --> J
 
-    I --> F
-    J --> F
+    I --> K
+    I --> L
 
-    F --> G
+    J --> K
+    J --> L
 
-    G --> L
+    K --> G
+    L --> G
 
-    L --> K
+    G --> H
 
-    K --> B
+    H --> F
 
-    %% Link Styling
-    linkStyle default stroke-width:3px;
+    F --> I
+    F --> J
 
-    %% Node Styling
-    classDef frontend fill:#E3F2FD,stroke:#1E88E5,color:#000,stroke-width:2px;
-    classDef backend fill:#E8F5E9,stroke:#43A047,color:#000,stroke-width:2px;
-    classDef ai fill:#FFF3E0,stroke:#FB8C00,color:#000,stroke-width:2px;
-    classDef data fill:#F3E5F5,stroke:#8E24AA,color:#000,stroke-width:2px;
+    I --> M
+    J --> M
 
-    class A,B frontend;
-    class C,D,E,F,G backend;
-    class H,L ai;
-    class I,J,K data;
+    M --> B
+
+    %% STYLING
+
+    classDef frontend fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;
+    classDef backend fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;
+    classDef ai fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;
+    classDef data fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#000;
+
+    class A,B,C frontend;
+    class D,E,F,G,H backend;
+    class I,J ai;
+    class K,L,M data;
 ```
