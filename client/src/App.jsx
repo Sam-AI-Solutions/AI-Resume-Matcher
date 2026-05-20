@@ -16,7 +16,7 @@ import {
   analyzeResume,
 } from "./services/api";
 
-import "./styles/App.css";
+import "./styles/index.css";
 
 function App() {
 
@@ -66,76 +66,104 @@ function App() {
   return (
     <main className="app">
 
-      <section className="container">
+      <div className="app-container">
+
+        {/* HERO */}
 
         <div className="hero">
-          <h1>
+
+          <div className="hero-badge">
+            <p className="hero-badge-text">
+              AI-Powered ATS Analysis
+            </p>
+          </div>
+
+          <h1 className="hero-title">
             AI Resume Matcher
           </h1>
 
-          <p>
-            Analyze your resume
-            against any job posting
+          <p className="hero-subtitle">
+            Compare your resume against
+            real job descriptions using
+            Gemini or locally-hosted
+            Ollama models.
           </p>
-        </div>
-
-        <div className="provider-selector">
-
-          <p>
-            Analyze with:
-          </p>
-
-          <label>
-            <input
-              type="radio"
-              value="gemini"
-              checked={
-                provider === "gemini"
-              }
-              onChange={(e) =>
-                setProvider(
-                  e.target.value
-                )
-              }
-            />
-
-            Gemini
-          </label>
-
-          <label>
-            <input
-              type="radio"
-              value="ollama"
-              checked={
-                provider === "ollama"
-              }
-              onChange={(e) =>
-                setProvider(
-                  e.target.value
-                )
-              }
-            />
-
-            Ollama
-          </label>
 
         </div>
 
-        <div className="inputs">
+        {/* INPUTS */}
 
-          <ResumeInput
-            resume={resume}
-            setResume={setResume}
-          />
+        <div className="input-grid">
 
-          <JobDescriptionInput
-            jobDescription={
-              jobDescription
-            }
-            setJobDescription={
-              setJobDescription
-            }
-          />
+          <div className="card">
+            <ResumeInput
+              resume={resume}
+              setResume={setResume}
+            />
+          </div>
+
+          <div className="card">
+            <JobDescriptionInput
+              jobDescription={
+                jobDescription
+              }
+              setJobDescription={
+                setJobDescription
+              }
+            />
+          </div>
+
+        </div>
+
+        {/* ACTION BAR */}
+
+        <div className="action-bar">
+
+          <div className="provider-group">
+
+            <p className="provider-label">
+              Analyze with
+            </p>
+
+            <div className="provider-toggle">
+
+              <button
+                className={
+                  provider === "gemini"
+                    ? "provider-pill active-provider"
+                    : "provider-pill"
+                }
+                onClick={() =>
+                  setProvider(
+                    "gemini"
+                  )
+                }
+              >
+                <span className="provider-dot gemini-dot" />
+
+                Gemini
+              </button>
+
+              <button
+                className={
+                  provider === "ollama"
+                    ? "provider-pill active-provider"
+                    : "provider-pill"
+                }
+                onClick={() =>
+                  setProvider(
+                    "ollama"
+                  )
+                }
+              >
+                <span className="provider-dot ollama-dot" />
+
+                Ollama
+              </button>
+
+            </div>
+
+          </div>
 
           <AnalyzeButton
             analyzeMatch={
@@ -146,13 +174,19 @@ function App() {
 
         </div>
 
+        {/* RESULTS */}
+
         {result && (
-          <ResultsCard
-            result={result}
-          />
+          <div className="results-container">
+
+            <ResultsCard
+              result={result}
+            />
+
+          </div>
         )}
 
-      </section>
+      </div>
 
     </main>
   );
